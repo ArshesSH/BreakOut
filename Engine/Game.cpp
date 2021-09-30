@@ -21,7 +21,7 @@
 #include "MainWindow.h"
 #include "Game.h"
 #include "Brick.h"
-#include "Rect.h"
+#include "RectF.h"
 
 Game::Game( MainWindow& wnd )
 	:

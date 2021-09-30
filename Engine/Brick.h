@@ -2,7 +2,7 @@
 
 #include "Graphics.h"
 #include "Colors.h"
-#include "Rect.h"
+#include "RectF.h"
 
 class Brick
 {
