@@ -26,7 +26,8 @@ Game::Game( MainWindow& wnd )
 	wnd( wnd ),
 	gfx( wnd ),
 	ball(Vec2(100.0f, 100.0f), Vec2(200.0f, 200.0f)),
-	wall(0.0f, float(gfx.ScreenWidth), 0, float(gfx.ScreenHeight))
+	wall(0.0f, float(gfx.ScreenWidth), 0, float(gfx.ScreenHeight)),
+	soundPad(L"Sounds\\arkpad.wav")
 {
 }
 
@@ -42,7 +43,11 @@ void Game::UpdateModel()
 {
 	const float dt = ft.Mark();
 	ball.Update(dt);
-	ball.DoWallcollision(wall);
+	if (ball.DoWallcollision(wall))
+	{
+		soundPad.Play();
+	}
+	
 }
 
 void Game::ComposeFrame()
