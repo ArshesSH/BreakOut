@@ -8,11 +8,11 @@ class Brick
 {
 public:
 	Brick() = default;
-	Brick(const Rect& rect_in, Color color_in);
+	Brick(const RectF& rect_in, Color color_in);
 	void Draw(Graphics& gfx) const;
 
 private:
 	Color color;
-	Rect rect;
+	RectF rect;
 	bool isDestroyed;
 };
