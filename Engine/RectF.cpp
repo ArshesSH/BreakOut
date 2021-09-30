@@ -1,4 +1,3 @@
-#include "Rect.h"
 #include "RectF.h"
 
 RectF::RectF(float left_in, float right_in, float top_in, float bottom_in)
