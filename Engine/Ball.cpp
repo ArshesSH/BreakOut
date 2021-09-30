@@ -44,6 +44,7 @@ bool Ball::DoWallcollision(const RectF& walls)
 		ReboundY();
 		isCollided = true;
 	}
+	return isCollided;
 }
 
 void Ball::ReboundX()
