@@ -24,7 +24,9 @@
 Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
-	gfx( wnd )
+	gfx( wnd ),
+	ball(Vec2(100.0f, 100.0f), Vec2(200.0f, 200.0f)),
+	wall(0.0f, float(gfx.ScreenWidth), 0, float(gfx.ScreenHeight))
 {
 }
 
@@ -38,8 +40,12 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+	const float dt = ft.Mark();
+	ball.Update(dt);
+	ball.DoWallcollision(wall);
 }
 
 void Game::ComposeFrame()
 {
+	ball.Draw(gfx);
 }
