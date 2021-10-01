@@ -42,4 +42,14 @@ bool Paddle::DoBallCollision(Ball& ball)
 
 void Paddle::DoWallCollision(const RectF& walls)
 {
+	const RectF rect = GetRect();
+
+	if (rect.right > walls.right)
+	{
+		pos.x -= rect.right - walls.right;
+	}
+	else if (rect.left < walls.left)
+	{
+		pos.x += walls.left - rect.left;
+	}
 }
