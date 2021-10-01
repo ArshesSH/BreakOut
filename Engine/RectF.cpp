@@ -17,7 +17,7 @@ RectF::RectF(const Vec2& topLeft, const Vec2& bottomRight)
 
 RectF::RectF(const Vec2& topLeft, float width, float height)
 	:
-	RectF(topLeft, Vec2(width, height))
+	RectF(topLeft, topLeft + Vec2(width, height))
 {
 }
 
