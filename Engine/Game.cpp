@@ -68,7 +68,14 @@ void Game::UpdateModel()
 	ball.Update(dt);
 	ball.DoWallcollision(wall);
 	
-	
+	for (Brick& b : bricks)
+	{
+		if (b.DoBallCollision(ball))
+		{
+			soundBrick.Play();
+			break;
+		}
+	}
 	
 }
 
