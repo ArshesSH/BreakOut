@@ -25,6 +25,8 @@
 #include "Graphics.h"
 #include "FrameTimer.h"
 #include "Ball.h"
+#include "Brick.h"
+#include "Paddle.h"
 #include "Sound.h"
 
 class Game
@@ -46,8 +48,17 @@ private:
 	/********************************/
 	/*  User Variables              */
 	/********************************/
+	static constexpr float brickWidth = 40.0f;
+	static constexpr float brickHeight = 24.0f;
+	static constexpr int nBricksCol = 4;
+	static constexpr int nBricksDown = 12;
+	static constexpr int nBricks = nBricksDown * nBricksCol;
+
 	FrameTimer ft;
 	Ball ball;
+	Brick bricks[nBricks];
+	Paddle pad;
 	Sound soundPad;
+	Sound soundBrick;
 	RectF wall;
 };
