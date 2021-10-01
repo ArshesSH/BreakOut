@@ -5,12 +5,14 @@ Brick::Brick(const RectF& rect_in, Color color_in)
 	rect(rect_in),
 	color(color_in)
 {
-	isDestroyed = false;
 }
 
 void Brick::Draw(Graphics& gfx) const
 {
-	gfx.DrawRect(rect, color);
+	if (!isDestroyed)
+	{
+		gfx.DrawRect(rect.GetExpanded(-padding), color);
+	}
 }
 
 bool Brick::DoBallCollision(Ball& ball)
