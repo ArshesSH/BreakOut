@@ -26,20 +26,6 @@ bool RectF::IsOverlapping(const RectF& other) const
 	return right > other.left && left < other.right && bottom > other.top && top < other.bottom;
 }
 
-int RectF::GetOverlappingDirection(const RectF& other, const bool isCollisioned) const
-{
-	enum Directions{LEFT = 1, RIGHT, TOP, BOTTOM};
-
-	if (isCollisioned)
-	{
-		if(top <= other.bottom && other.bottom < )
-	}
-	else
-	{
-		return 0;
-	}
-	return -1;
-}
 
 RectF RectF::FromCenter(const Vec2& center, float halfWidth, float halfHeight)
 {

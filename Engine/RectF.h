@@ -10,7 +10,6 @@ public:
 	RectF(const Vec2& topLeft, const Vec2& bottomRight);
 	RectF(const Vec2& topLeft, float width, float height);
 	bool IsOverlapping(const RectF& other) const;
-	int GetOverlappingDirection(const RectF& other, const bool isCollisioned) const;
 	static RectF FromCenter(const Vec2& center, float halfWidth, float halfHeight);
 	RectF GetExpanded(float offset) const;
 	Vec2 GetCenter() const;

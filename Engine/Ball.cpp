@@ -70,3 +70,51 @@ RectF Ball::GetRect() const
 {
 	return RectF::FromCenter(pos, radius, radius);
 }
+
+int Ball::GetBallCollisionDir(const RectF& target) const
+{
+	enum Directions { LEFT, RIGHT, TOP, BOTTOM };
+	const RectF rectBall = GetRect();
+
+	if (rectBall.bottom >= target.top && rectBall.bottom < target.GetCenter().y)		// Direction from top
+	{
+		const float collisionHeight = rectBall.bottom - target.top;
+
+		if (rectBall.right >= target.left && rectBall.right < target.right)		// LeftSide
+		{
+			const float collisionWidth = rectBall.right - target.left;
+
+			if (collisionHeight > collisionWidth) { return LEFT; }
+			else { return TOP; }
+		}
+		else if (rectBall.left <= target.right && rectBall.left > target.left)		// RightSide
+		{
+			const float collisionWidth = rectBall.left - target.right;
+
+			if (collisionHeight > collisionWidth) { return RIGHT; }
+			else { return TOP; }
+		}
+		else { return TOP; }
+	}
+	else
+	{
+		const float collisionHeight = rectBall.top - target.bottom;
+
+		if (rectBall.right >= target.left && rectBall.right < target.right)		// LeftSide
+		{
+			const float collisionWidth = rectBall.right - target.left;
+
+			if (collisionHeight > collisionWidth) { return LEFT; }
+			else { return BOTTOM; }
+		}
+		else if (rectBall.left <= target.right && rectBall.left > target.left)		// RightSide
+		{
+			const float collisionWidth = rectBall.left - target.right;
+
+			if (collisionHeight > collisionWidth) { return RIGHT; }
+			else { return BOTTOM; }
+		}
+		else { return BOTTOM; }
+	}
+	return -1;
+}

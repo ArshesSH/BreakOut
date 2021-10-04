@@ -14,6 +14,7 @@ public:
 	void ReboundY();
 	Vec2 GetVelocity();
 	RectF GetRect() const;
+	int GetBallCollisionDir(const RectF& target) const;
 private:
 	static constexpr float radius = 7.0f;
 	Vec2 pos;
