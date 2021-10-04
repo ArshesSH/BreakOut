@@ -70,12 +70,27 @@ void Game::UpdateModel()
 	
 	for (Brick& b : bricks)
 	{
+		if (b.CheckBallCollision(ball))
+		{
+			b.ExcuteBallCollision(ball);
+			soundBrick.Play();
+			break;
+		}
+	}
+
+
+
+	/*
+		for (Brick& b : bricks)
+	{
 		if (b.DoBallCollision(ball))
 		{
 			soundBrick.Play();
 			break;
 		}
 	}
+	*/
+
 	
 }
 
