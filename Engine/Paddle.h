@@ -11,12 +11,14 @@ class Paddle
 public:
 	Paddle(const Vec2 pos_in, float halfWidth_in, float halfHeight_in);
 	void Draw(Graphics& gfx);
-	void Update(Keyboard& kbd, float dt);
+	void Update(const Keyboard& kbd, float dt);
 	RectF GetRect() const;
 	bool DoBallCollision(Ball& ball);
 	void DoWallCollision(const RectF& walls);
 
 private:
+	static constexpr float wingWidth = 10.0f;
+	Color wingColor = Colors::Red;
 	Color c = Colors::Gray;
 	Vec2 pos;
 	float speed = 300.0f;

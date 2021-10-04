@@ -10,10 +10,14 @@ Paddle::Paddle(const Vec2 pos_in, float halfWidth_in, float halfHeight_in)
 
 void Paddle::Draw(Graphics& gfx)
 {
-	gfx.DrawRect(GetRect(), c);
+	RectF rect = GetRect();
+	gfx.DrawRect(rect, wingColor);
+	rect.left += wingWidth;
+	rect.right -= wingWidth;
+	gfx.DrawRect(rect, c);
 }
 
-void Paddle::Update(Keyboard& kbd, float dt)
+void Paddle::Update(const Keyboard& kbd, float dt)
 {
 	if (kbd.KeyIsPressed(VK_LEFT))
 	{
