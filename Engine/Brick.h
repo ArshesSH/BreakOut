@@ -13,7 +13,6 @@ public:
 	bool CheckBallCollision(const Ball& ball) const;
 	bool DoBallCollision(Ball& ball);
 	void ExcuteBallCollision(Ball& ball);
-	void CollisionEffect(Ball& ball);
 
 private:
 	static constexpr float padding = 1.0f;
