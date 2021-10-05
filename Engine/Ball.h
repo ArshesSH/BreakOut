@@ -12,9 +12,11 @@ public:
 	bool DoWallcollision(const RectF& walls);
 	void ReboundX();
 	void ReboundY();
-	Vec2 GetVelocity();
+	Vec2 GetVelocity() const;
 	RectF GetRect() const;
 	int GetBallCollisionDir(const RectF& target) const;
+	bool IsCollisionY(const RectF& target) const;
+	float GetCollisionLength(const float coordTargetL, const float coordTargetS, const float coordBallL, const float coordBallS) const;
 private:
 	static constexpr float radius = 7.0f;
 	Vec2 pos;

@@ -61,7 +61,7 @@ void Ball::ReboundY()
 	vel.y = -vel.y;
 }
 
-Vec2 Ball::GetVelocity()
+Vec2 Ball::GetVelocity() const
 {
 	return vel;
 }
@@ -70,6 +70,7 @@ RectF Ball::GetRect() const
 {
 	return RectF::FromCenter(pos, radius, radius);
 }
+
 
 int Ball::GetBallCollisionDir(const RectF& target) const
 {
@@ -117,4 +118,82 @@ int Ball::GetBallCollisionDir(const RectF& target) const
 		else { return BOTTOM; }
 	}
 	return -1;
+}
+
+bool Ball::IsCollisionY(const RectF& target) const
+{
+	const RectF rectBall = GetRect();
+	const float ballWidth = rectBall.right - rectBall.left;
+	const float ballHeight = rectBall.bottom - rectBall.top;
+	const float targetWidth = target.right - target.left;
+	const float targetHeight = target.bottom - target.top;
+
+	const float collisionHeight = GetCollisionLength(target.bottom, target.top, rectBall.bottom, rectBall.top);
+	const float collisionWidth = GetCollisionLength(target.right, target.left, rectBall.right, rectBall.left);
+
+	if (collisionWidth >= collisionHeight)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+
+
+	/*
+	if (rectBall.left >= target.left && rectBall.right <= target.right)
+	{
+		const float collisionWidth = ballWidth;
+	}
+	else if (rectBall.left < target.left && rectBall.right < target.right)
+	{
+		const float collisionWidth = rectBall.right - target.left;
+	}
+	else if (rectBall.left > target.left && rectBall.right > target.right)
+	{
+		const float collisionWidth = target.right - rectBall.left;
+	}
+	else
+	{
+		const float collisionWidth = targetWidth;
+	}
+
+	if (rectBall.left >= target.left && rectBall.right <= target.right)
+	{
+		const float collisionWidth = ballWidth;
+	}
+	else if (rectBall.left < target.left && rectBall.right < target.right)
+	{
+		const float collisionWidth = rectBall.right - target.left;
+	}
+	else if (rectBall.left > target.left && rectBall.right > target.right)
+	{
+		const float collisionWidth = target.right - rectBall.left;
+	}
+	else
+	{
+		const float collisionWidth = targetWidth;
+	}
+	*/
+}
+
+float Ball::GetCollisionLength(const float coordTargetL, const float coordTargetS, const float coordBallL, const float coordBallS) const
+{
+	if (coordBallS >= coordTargetS && coordBallL <= coordTargetL)
+	{
+		return coordBallL - coordBallS;
+	}
+	else if (coordBallS < coordTargetS && coordBallL < coordTargetL)
+	{
+		return coordBallL - coordTargetS;
+	}
+	else if (coordBallS > coordTargetS && coordBallL > coordTargetL)
+	{
+		return coordTargetL - coordBallS;
+	}
+	else
+	{
+		return coordTargetL - coordTargetS;
+	}
 }

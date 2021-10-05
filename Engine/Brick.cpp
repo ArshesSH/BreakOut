@@ -36,24 +36,33 @@ void Brick::ExcuteBallCollision(Ball& ball)
 {
 	assert(CheckBallCollision(ball));
 
-	const int directionNum = ball.GetBallCollisionDir(rect);
-	enum Directions { LEFT, RIGHT, TOP, BOTTOM };
-
-	switch (directionNum)
+	if (ball.IsCollisionY(rect))
 	{
-	case LEFT:
-	case RIGHT:
-		ball.ReboundX();
-		isDestroyed = true;
-		break;
-
-	case TOP:
-	case BOTTOM:
 		ball.ReboundY();
 		isDestroyed = true;
-		break;
-
-	default:
-		break;
 	}
+	else
+	{
+		ball.ReboundX();
+		isDestroyed = true;
+	}
+
+	//const int directionNum = ball.GetBallCollisionDir(rect);
+	//enum Directions { COLLISION_X, COLLISION_Y };
+
+	//switch (directionNum)
+	//{
+	//case COLLISION_X:
+	//	ball.ReboundX();
+	//	isDestroyed = true;
+	//	break;
+
+	//case COLLISION_Y:
+	//	ball.ReboundY();
+	//	isDestroyed = true;
+	//	break;
+
+	//default:
+	//	break;
+	//}
 }
