@@ -71,55 +71,6 @@ RectF Ball::GetRect() const
 	return RectF::FromCenter(pos, radius, radius);
 }
 
-
-int Ball::GetBallCollisionDir(const RectF& target) const
-{
-	enum Directions { LEFT, RIGHT, TOP, BOTTOM };
-	const RectF rectBall = GetRect();
-
-	if (rectBall.bottom >= target.top && rectBall.bottom < target.GetCenter().y)		// Direction from top
-	{
-		const float collisionHeight = rectBall.bottom - target.top;
-
-		if (rectBall.right >= target.left && rectBall.right < target.right)		// LeftSide
-		{
-			const float collisionWidth = rectBall.right - target.left;
-
-			if (collisionHeight > collisionWidth) { return LEFT; }
-			else { return TOP; }
-		}
-		else if (rectBall.left <= target.right && rectBall.left > target.left)		// RightSide
-		{
-			const float collisionWidth = rectBall.left - target.right;
-
-			if (collisionHeight > collisionWidth) { return RIGHT; }
-			else { return TOP; }
-		}
-		else { return TOP; }
-	}
-	else
-	{
-		const float collisionHeight = rectBall.top - target.bottom;
-
-		if (rectBall.right >= target.left && rectBall.right < target.right)		// LeftSide
-		{
-			const float collisionWidth = rectBall.right - target.left;
-
-			if (collisionHeight > collisionWidth) { return LEFT; }
-			else { return BOTTOM; }
-		}
-		else if (rectBall.left <= target.right && rectBall.left > target.left)		// RightSide
-		{
-			const float collisionWidth = rectBall.left - target.right;
-
-			if (collisionHeight > collisionWidth) { return RIGHT; }
-			else { return BOTTOM; }
-		}
-		else { return BOTTOM; }
-	}
-	return -1;
-}
-
 bool Ball::IsCollisionY(const RectF& target) const
 {
 	const RectF rectBall = GetRect();
@@ -139,43 +90,6 @@ bool Ball::IsCollisionY(const RectF& target) const
 	{
 		return false;
 	}
-
-
-	/*
-	if (rectBall.left >= target.left && rectBall.right <= target.right)
-	{
-		const float collisionWidth = ballWidth;
-	}
-	else if (rectBall.left < target.left && rectBall.right < target.right)
-	{
-		const float collisionWidth = rectBall.right - target.left;
-	}
-	else if (rectBall.left > target.left && rectBall.right > target.right)
-	{
-		const float collisionWidth = target.right - rectBall.left;
-	}
-	else
-	{
-		const float collisionWidth = targetWidth;
-	}
-
-	if (rectBall.left >= target.left && rectBall.right <= target.right)
-	{
-		const float collisionWidth = ballWidth;
-	}
-	else if (rectBall.left < target.left && rectBall.right < target.right)
-	{
-		const float collisionWidth = rectBall.right - target.left;
-	}
-	else if (rectBall.left > target.left && rectBall.right > target.right)
-	{
-		const float collisionWidth = target.right - rectBall.left;
-	}
-	else
-	{
-		const float collisionWidth = targetWidth;
-	}
-	*/
 }
 
 float Ball::GetCollisionLength(const float coordTargetL, const float coordTargetS, const float coordBallL, const float coordBallS) const

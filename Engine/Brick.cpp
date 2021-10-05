@@ -46,23 +46,4 @@ void Brick::ExcuteBallCollision(Ball& ball)
 		ball.ReboundX();
 		isDestroyed = true;
 	}
-
-	//const int directionNum = ball.GetBallCollisionDir(rect);
-	//enum Directions { COLLISION_X, COLLISION_Y };
-
-	//switch (directionNum)
-	//{
-	//case COLLISION_X:
-	//	ball.ReboundX();
-	//	isDestroyed = true;
-	//	break;
-
-	//case COLLISION_Y:
-	//	ball.ReboundY();
-	//	isDestroyed = true;
-	//	break;
-
-	//default:
-	//	break;
-	//}
 }

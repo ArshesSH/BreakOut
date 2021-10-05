@@ -14,7 +14,6 @@ public:
 	void ReboundY();
 	Vec2 GetVelocity() const;
 	RectF GetRect() const;
-	int GetBallCollisionDir(const RectF& target) const;
 	bool IsCollisionY(const RectF& target) const;
 	float GetCollisionLength(const float coordTargetL, const float coordTargetS, const float coordBallL, const float coordBallS) const;
 private:
