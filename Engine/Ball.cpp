@@ -74,10 +74,6 @@ RectF Ball::GetRect() const
 bool Ball::IsCollisionY(const RectF& target) const
 {
 	const RectF rectBall = GetRect();
-	const float ballWidth = rectBall.right - rectBall.left;
-	const float ballHeight = rectBall.bottom - rectBall.top;
-	const float targetWidth = target.right - target.left;
-	const float targetHeight = target.bottom - target.top;
 
 	const float collisionHeight = GetCollisionLength(target.bottom, target.top, rectBall.bottom, rectBall.top);
 	const float collisionWidth = GetCollisionLength(target.right, target.left, rectBall.right, rectBall.left);
@@ -109,5 +105,33 @@ float Ball::GetCollisionLength(const float coordTargetL, const float coordTarget
 	else
 	{
 		return coordTargetL - coordTargetS;
+	}
+}
+
+RectF Ball::GetCollisionRect(const RectF& target) const
+{
+	const RectF rectBall = GetRect();
+	const CollisionInform widthX = GetCollisionInform(target.right, target.left, rectBall.right, rectBall.left);
+	const CollisionInform heigthY = GetCollisionInform(target.bottom, target.top, rectBall.bottom, rectBall.top);
+	return RectF(Vec2(widthX.coord, heigthY.coord), widthX.length, heigthY.length);
+}
+
+CollisionInform Ball::GetCollisionInform(const float coordTargetL, const float coordTargetS, const float coordBallL, const float coordBallS) const
+{
+	if (coordBallS >= coordTargetS && coordBallL <= coordTargetL)
+	{
+		return CollisionInform(coordBallL - coordBallS, coordBallS);
+	}
+	else if (coordBallS < coordTargetS && coordBallL < coordTargetL)
+	{
+		return CollisionInform(coordBallL - coordTargetS, coordTargetS);
+	}
+	else if (coordBallS > coordTargetS && coordBallL > coordTargetL)
+	{
+		return CollisionInform(coordTargetL - coordBallS, coordBallS);
+	}
+	else
+	{
+		return CollisionInform(coordTargetL - coordTargetS, coordTargetS);
 	}
 }
