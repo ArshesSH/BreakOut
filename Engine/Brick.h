@@ -13,7 +13,7 @@ public:
 	bool CheckBallCollision(const Ball& ball) const;
 	bool DoBallCollision(Ball& ball);
 	void ExcuteBallCollision(Ball& ball);
-
+	Vec2 GetCenter() const;
 private:
 	static constexpr float padding = 1.0f;
 	Color color;

@@ -47,3 +47,8 @@ void Brick::ExcuteBallCollision(Ball& ball)
 		isDestroyed = true;
 	}
 }
+
+Vec2 Brick::GetCenter() const
+{
+	return Vec2(rect.GetCenter());
+}

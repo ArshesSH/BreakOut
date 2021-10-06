@@ -59,31 +59,54 @@ void Game::UpdateModel()
 	const float dt = ft.Mark();
 	
 	pad.Update(wnd.kbd, dt);
+	pad.DoWallCollision(wall);
 	if (pad.CheckBallColision(ball))
 	{
 		pad.ExcuteBallCollision(ball);
 		soundPad.Play();
 	}
-	
-
-	//pad.DoWallCollision(wall);
-	//if (pad.DoBallCollision(ball))
-	//{
-	//	soundPad.Play();
-	//}
 
 	ball.Update(dt);
-	ball.DoWallcollision(wall);
-	
-	for (Brick& b : bricks)
+
+	bool collisionHappened = false;
+	float curColDistSq;
+	int curColIndex;
+	for (int i = 0; i < nBricks; i++)
 	{
-		if (b.CheckBallCollision(ball))
+		if (bricks[i].CheckBallCollision(ball))
 		{
-			b.ExcuteBallCollision(ball);
-			soundBrick.Play();
-			break;
+			const float newColDistSq = (ball.GetPosition() - bricks[i].GetCenter()).GetLengthSq();
+			if (collisionHappened)
+			{
+				if (newColDistSq < curColDistSq)
+				{
+					curColDistSq = newColDistSq;
+					curColIndex = i;
+				}
+			}
+			else
+			{
+				curColDistSq = newColDistSq;
+				curColIndex = i;
+				collisionHappened = true;
+			}
 		}
 	}
+
+	if (collisionHappened)
+	{
+		bricks[curColIndex].ExcuteBallCollision(ball);
+		soundBrick.Play();
+		pad.ResetCooldown();
+	}
+
+
+	if (ball.DoWallcollision(wall))
+	{
+		soundPad.Play();
+		pad.ResetCooldown();
+	}
+
 }
 
 void Game::ComposeFrame()

@@ -17,7 +17,7 @@ public:
 	bool DoBallCollision(Ball& ball);
 	void ExcuteBallCollision(Ball& ball);
 	void DoWallCollision(const RectF& walls);
-
+	void ResetCooldown();
 private:
 	static constexpr float wingWidth = 10.0f;
 	Color wingColor = Colors::Red;
@@ -26,4 +26,5 @@ private:
 	float speed = 300.0f;
 	float halfWidth;
 	float halfHeight;
+	bool isCooldown = false;
 };
