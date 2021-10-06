@@ -13,7 +13,9 @@ public:
 	void Draw(Graphics& gfx);
 	void Update(const Keyboard& kbd, float dt);
 	RectF GetRect() const;
+	bool CheckBallColision(Ball& ball);
 	bool DoBallCollision(Ball& ball);
+	void ExcuteBallCollision(Ball& ball);
 	void DoWallCollision(const RectF& walls);
 
 private:

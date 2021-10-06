@@ -1,4 +1,5 @@
 #include "Paddle.h"
+#include <assert.h>
 
 Paddle::Paddle(const Vec2 pos_in, float halfWidth_in, float halfHeight_in)
 	:
@@ -34,6 +35,11 @@ RectF Paddle::GetRect() const
 	return RectF::FromCenter(pos, halfWidth, halfHeight);
 }
 
+bool Paddle::CheckBallColision(Ball& ball)
+{
+	return GetRect().IsOverlapping(ball.GetRect());
+}
+
 bool Paddle::DoBallCollision(Ball& ball)
 {
 	if (ball.GetVelocity().y > 0.0f && GetRect().IsOverlapping(ball.GetRect()))
@@ -42,6 +48,22 @@ bool Paddle::DoBallCollision(Ball& ball)
 		return true;
 	}
 	return false;
+}
+
+void Paddle::ExcuteBallCollision(Ball& ball)
+{
+	assert(CheckBallColision(ball));
+
+	const RectF rect = GetRect();
+
+	if (ball.IsCollisionY(rect))
+	{
+		ball.ReboundY();
+	}
+	else
+	{
+		ball.ReboundX();
+	}
 }
 
 void Paddle::DoWallCollision(const RectF& walls)

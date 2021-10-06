@@ -59,11 +59,18 @@ void Game::UpdateModel()
 	const float dt = ft.Mark();
 	
 	pad.Update(wnd.kbd, dt);
-	pad.DoWallCollision(wall);
-	if (pad.DoBallCollision(ball))
+	if (pad.CheckBallColision(ball))
 	{
+		pad.ExcuteBallCollision(ball);
 		soundPad.Play();
 	}
+	
+
+	//pad.DoWallCollision(wall);
+	//if (pad.DoBallCollision(ball))
+	//{
+	//	soundPad.Play();
+	//}
 
 	ball.Update(dt);
 	ball.DoWallcollision(wall);
@@ -77,21 +84,6 @@ void Game::UpdateModel()
 			break;
 		}
 	}
-
-
-
-	/*
-		for (Brick& b : bricks)
-	{
-		if (b.DoBallCollision(ball))
-		{
-			soundBrick.Play();
-			break;
-		}
-	}
-	*/
-
-	
 }
 
 void Game::ComposeFrame()
