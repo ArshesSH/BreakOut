@@ -144,5 +144,6 @@ CollisionInform Ball::GetCollisionInform(const float coordTargetL, const float c
 
 void Ball::SetDirection(const Vec2& dir)
 {
-	vel = dir.GetNormalized() * speed;
+	const Vec2 test = dir.GetNormalized();
+	vel = test * speed;
 }

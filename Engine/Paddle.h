@@ -28,7 +28,6 @@ private:
 	static constexpr float fixedZoneWidthRatio = 0.2f;
 
 	Vec2 pos;
-	Vec2 dir;
 
 	float exitXFactor = 0.045f;
 	float fixedZoneHalfWidth = 15.0f;
