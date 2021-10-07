@@ -1,11 +1,11 @@
 #include "Ball.h"
 #include "SpriteCodex.h"
 
-Ball::Ball(const Vec2& pos_in, const Vec2& vel_in)
+Ball::Ball(const Vec2& pos_in, const Vec2& dir_in)
 	:
-	pos(pos_in),
-	vel(vel_in)
+	pos(pos_in)
 {
+	SetDirection(dir_in);
 }
 
 void Ball::Draw(Graphics& gfx)
@@ -140,4 +140,9 @@ CollisionInform Ball::GetCollisionInform(const float coordTargetL, const float c
 	{
 		return CollisionInform(coordTargetL - coordTargetS, coordTargetS);
 	}
+}
+
+void Ball::SetDirection(const Vec2& dir)
+{
+	vel = dir.GetNormalized() * speed;
 }
