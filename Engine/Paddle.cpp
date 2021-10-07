@@ -5,7 +5,10 @@ Paddle::Paddle(const Vec2 pos_in, float halfWidth_in, float halfHeight_in)
 	:
 	pos(pos_in),
 	halfWidth(halfWidth_in),
-	halfHeight(halfHeight_in)
+	halfHeight(halfHeight_in),
+	exitXFactor(maxExitRatio / halfWidth),
+	fixedZoneHalfWidth(halfWidth* fixedZoneWidthRatio),
+	fixedZoneExitX(fixedZoneHalfWidth * exitXFactor)
 {
 }
 
@@ -65,7 +68,23 @@ void Paddle::ExcuteBallCollision(Ball& ball)
 
 	if (ball.IsCollisionY(rect))
 	{
-		ball.ReboundY();
+		const float xDifference = ball.GetPosition().x - pos.x;
+		if (std::abs(xDifference) < fixedZoneHalfWidth)
+		{
+			if (xDifference < 0.0f)
+			{
+				dir = Vec2(-fixedZoneExitX, -1.0f);
+			}
+			else
+			{
+				dir = Vec2(fixedZoneExitX, -1.0f);
+			}
+		}
+		else
+		{
+			dir = Vec2(xDifference * exitXFactor, -1.0f);
+		}
+		ball.SetDirection(dir);
 	}
 	else
 	{

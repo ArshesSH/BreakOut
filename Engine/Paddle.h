@@ -19,11 +19,20 @@ public:
 	void DoWallCollision(const RectF& walls);
 	void ResetCooldown();
 private:
-	static constexpr float wingWidth = 10.0f;
-	Color wingColor = Colors::Red;
-	Color c = Colors::Gray;
+	static constexpr Color wingColor = Colors::Red;
+	static constexpr Color c = Colors::Gray;
+
+	static constexpr float wingWidth = 18.0f;
+	static constexpr float speed = 300.f;
+	static constexpr float maxExitRatio = 2.6f;
+	static constexpr float fixedZoneWidthRatio = 0.2f;
+
 	Vec2 pos;
-	float speed = 300.0f;
+	Vec2 dir;
+
+	float exitXFactor = 0.045f;
+	float fixedZoneHalfWidth = 15.0f;
+	float fixedZoneExitX;
 	float halfWidth;
 	float halfHeight;
 	bool isCooldown = false;
