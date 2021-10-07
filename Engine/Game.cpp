@@ -56,57 +56,63 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-	const float dt = ft.Mark();
-	
-	pad.Update(wnd.kbd, dt);
-	pad.DoWallCollision(wall);
-	if (pad.CheckBallColision(ball))
+	if (!isGameOver)
 	{
-		pad.ExcuteBallCollision(ball);
-		soundPad.Play();
-	}
+		const float dt = ft.Mark();
 
-	ball.Update(dt);
-
-	bool collisionHappened = false;
-	float curColDistSq;
-	int curColIndex;
-	for (int i = 0; i < nBricks; i++)
-	{
-		if (bricks[i].CheckBallCollision(ball))
+		pad.Update(wnd.kbd, dt);
+		pad.DoWallCollision(wall);
+		if (pad.CheckBallColision(ball))
 		{
-			const float newColDistSq = (ball.GetPosition() - bricks[i].GetCenter()).GetLengthSq();
-			if (collisionHappened)
+			pad.ExcuteBallCollision(ball);
+			soundPad.Play();
+		}
+
+		ball.Update(dt);
+
+		bool collisionHappened = false;
+		float curColDistSq;
+		int curColIndex;
+		for (int i = 0; i < nBricks; i++)
+		{
+			if (bricks[i].CheckBallCollision(ball))
 			{
-				if (newColDistSq < curColDistSq)
+				const float newColDistSq = (ball.GetPosition() - bricks[i].GetCenter()).GetLengthSq();
+				if (collisionHappened)
+				{
+					if (newColDistSq < curColDistSq)
+					{
+						curColDistSq = newColDistSq;
+						curColIndex = i;
+					}
+				}
+				else
 				{
 					curColDistSq = newColDistSq;
 					curColIndex = i;
+					collisionHappened = true;
 				}
 			}
-			else
-			{
-				curColDistSq = newColDistSq;
-				curColIndex = i;
-				collisionHappened = true;
-			}
+		}
+
+		if (collisionHappened)
+		{
+			bricks[curColIndex].ExcuteBallCollision(ball);
+			soundBrick.Play();
+			pad.ResetCooldown();
+		}
+
+		const int ballWallColResult = ball.DoWallcollision(wall);
+		if (ballWallColResult == 1)
+		{
+			soundPad.Play();
+			pad.ResetCooldown();
+		}
+		else if (ballWallColResult == 2)
+		{
+			isGameOver = true;
 		}
 	}
-
-	if (collisionHappened)
-	{
-		bricks[curColIndex].ExcuteBallCollision(ball);
-		soundBrick.Play();
-		pad.ResetCooldown();
-	}
-
-
-	if (ball.DoWallcollision(wall))
-	{
-		soundPad.Play();
-		pad.ResetCooldown();
-	}
-
 }
 
 void Game::ComposeFrame()

@@ -61,4 +61,6 @@ private:
 	Sound soundPad;
 	Sound soundBrick;
 	RectF wall;
+
+	bool isGameOver = false;
 };
