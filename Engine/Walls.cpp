@@ -7,6 +7,7 @@ Walls::Walls(const RectF& innerBounds_in, float thickness_in, Color baseColor)
     thickness(thickness_in),
     bev(baseColor)
 {
+    assert(int(thickness) % 2 == 0);
     assert(innerBounds.GetExpanded(thickness).IsContainedBy(Graphics::GetScreenRect()));
 }
 
@@ -17,5 +18,5 @@ const RectF& Walls::GetInnerBounds() const
 
 void Walls::Draw(Graphics& gfx) const
 {
-    bev.DrawBevelFrame(innerBounds.GetExpanded(thickness), int(thickness), gfx);
+    bev.DrawBevelFrame(innerBounds.GetExpanded(thickness), int(thickness) / 2, gfx);
 }

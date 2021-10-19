@@ -24,6 +24,7 @@
 #include "Mouse.h"
 #include "Graphics.h"
 #include "FrameTimer.h"
+#include "Walls.h"
 #include "Ball.h"
 #include "Brick.h"
 #include "Paddle.h"
@@ -55,12 +56,12 @@ private:
 	static constexpr int nBricks = nBricksDown * nBricksCol;
 
 	FrameTimer ft;
+	Walls wall;
 	Ball ball;
 	Brick bricks[nBricks];
 	Paddle pad;
 	Sound soundPad;
 	Sound soundBrick;
-	RectF wall;
 
 	bool isGameOver = false;
 };

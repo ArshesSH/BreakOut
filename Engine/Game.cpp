@@ -25,7 +25,7 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-	wall(0.0f, float(gfx.ScreenWidth), 0, float(gfx.ScreenHeight)),
+	wall(Graphics::GetScreenRect().GetExpanded(-40.0f), 40.0f, { 20,60,200 }),
 	ball(Vec2(300.0f, 300.0f), Vec2(-1.0f, -1.0f)),
 	pad(Vec2(400.0f, 500.0f), 50.0f, 15.0f),
 	soundPad(L"Sounds\\arkpad.wav"),
@@ -61,7 +61,7 @@ void Game::UpdateModel()
 		const float dt = ft.Mark();
 
 		pad.Update(wnd.kbd, dt);
-		pad.DoWallCollision(wall);
+		pad.DoWallCollision(wall.GetInnerBounds());
 		if (pad.CheckBallColision(ball))
 		{
 			pad.ExcuteBallCollision(ball);
@@ -102,7 +102,7 @@ void Game::UpdateModel()
 			pad.ResetCooldown();
 		}
 
-		const int ballWallColResult = ball.DoWallcollision(wall);
+		const int ballWallColResult = ball.DoWallcollision(wall.GetInnerBounds());
 		if (ballWallColResult == 1)
 		{
 			soundPad.Play();
@@ -127,4 +127,5 @@ void Game::ComposeFrame()
 	{
 		b.Draw(gfx);
 	}
+	wall.Draw(gfx);
 }
