@@ -50,10 +50,16 @@ private:
 	/*  User Variables              */
 	/********************************/
 	static constexpr float brickWidth = 40.0f;
-	static constexpr float brickHeight = 24.0f;
+	static constexpr float brickHeight = 22.0f;
 	static constexpr int nBricksCol = 4;
-	static constexpr int nBricksDown = 18;
+	static constexpr int nBricksDown = 12;
 	static constexpr int nBricks = nBricksDown * nBricksCol;
+	static constexpr float topSpace = brickHeight * 1.6f;
+	static constexpr float wallThickness = 12.0f;
+	static constexpr float fieldWidth = float(nBricksCol) * brickWidth;
+	static constexpr float fieldHeight = float(Graphics::ScreenHeight) - wallThickness * 2.0f;
+	static constexpr Color brickColors[4] = { Colors::Red,Colors::Green,Colors::Blue,Colors::Cyan };
+	static constexpr Color wallColor = { 20,60,200 };
 
 	FrameTimer ft;
 	Walls wall;
