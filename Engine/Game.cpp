@@ -117,10 +117,14 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
+	if (!isGameOver)
+	{
+		ball.Draw(gfx);
+		pad.Draw(gfx);
+	}
+
 	for (const Brick& b : bricks)
 	{
 		b.Draw(gfx);
 	}
-	ball.Draw(gfx);
-	pad.Draw(gfx);
 }
