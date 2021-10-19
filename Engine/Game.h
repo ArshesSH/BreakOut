@@ -58,7 +58,7 @@ private:
 	static constexpr float wallThickness = 12.0f;
 	static constexpr float fieldWidth = float(nBricksCol) * brickWidth;
 	static constexpr float fieldHeight = float(Graphics::ScreenHeight) - wallThickness * 2.0f;
-	static constexpr Color brickColors[4] = { {230,0,0},{0,0,230},{0,0,230},Colors::Cyan };
+	static constexpr Color brickColors[4] = { {230,0,0},{0,230,0},{0,0,230},Colors::Cyan };
 	static constexpr Color wallColor = { 20,60,200 };
 
 	FrameTimer ft;
