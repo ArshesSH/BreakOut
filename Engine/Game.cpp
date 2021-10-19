@@ -35,10 +35,10 @@ Game::Game( MainWindow& wnd )
 	const Vec2 gridTopLeft(wall.GetInnerBounds().left, wall.GetInnerBounds().top + topSpace);
 
 	int i = 0;
-	for (int y = 0; y < nBricksCol; y++)
+	for (int y = 0; y < nBricksDown; y++)
 	{
 		const Color c = brickColors[y];
-		for (int x = 0; x < nBricksDown; x++)
+		for (int x = 0; x < nBricksCol; x++)
 		{
 			bricks[i] = Brick(RectF(gridTopLeft + Vec2(x * brickWidth, y * brickHeight), brickWidth, brickHeight), c);
 			i++;
