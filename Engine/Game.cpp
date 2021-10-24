@@ -56,9 +56,10 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-	if (!isGameOver)
+	const float dt = ft.Mark();
+	if (gameState == 1)
 	{
-		const float dt = ft.Mark();
+
 
 		pad.Update(wnd.kbd, dt);
 		pad.DoWallCollision(wall.GetInnerBounds());
@@ -110,22 +111,57 @@ void Game::UpdateModel()
 		}
 		else if (ballWallColResult == 2)
 		{
+			gameState = 2;
 			isGameOver = true;
+		}
+	}
+	else if (gameState == 0)
+	{
+		if (wnd.kbd.KeyIsPressed(VK_RETURN))
+		{
+			StartRound();
+		}
+	}
+	else if (gameState == 3)
+	{
+		// check to see if ready wait period is over
+		if ((curWaitTime += dt) > readyWaitTime)
+		{
+			gameState = 1;
 		}
 	}
 }
 
+void Game::StartRound()
+{
+	curWaitTime = 0.0f;
+	gameState = 3;
+}
+
 void Game::ComposeFrame()
 {
-	if (!isGameOver)
+	if (gameState == 1 || gameState == 3)
 	{
 		ball.Draw(gfx);
 		pad.Draw(gfx);
 	}
 
-	for (const Brick& b : bricks)
+	if (gameState != 0)
 	{
-		b.Draw(gfx);
+		for (const Brick& b : bricks)
+		{
+			b.Draw(gfx);
+		}
+		wall.Draw(gfx);
 	}
-	wall.Draw(gfx);
+
+	if (gameState == 0)
+	{
+		SpriteCodex::DrawTitle(Graphics::GetScreenRect().GetCenter(), gfx);
+	}
+
+	else if (gameState == 2)
+	{
+		SpriteCodex::DrawGameOver(Graphics::GetScreenRect().GetCenter(), gfx);
+	}
 }
