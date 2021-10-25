@@ -105,8 +105,8 @@ void Game::UpdateModel()
 			pad.ResetCooldown();
 		}
 
-		const int ballWallColResult = ball.DoWallcollision(wall.GetInnerBounds());
-		if (ballWallColResult == 1)
+		const Ball::WallCollResult ballWallColResult = ball.DoWallcollision(wall.GetInnerBounds());
+		if (ballWallColResult == Ball::WallCollided)
 		{
 			if (!pad.GetRect().IsOverlapping(ball.GetRect()))
 			{
@@ -114,7 +114,7 @@ void Game::UpdateModel()
 			}
 			soundPad.Play();
 		}
-		else if (ballWallColResult == 2)
+		else if (ballWallColResult == Ball::GameOver)
 		{
 			StartRound();
 			ResetBall();

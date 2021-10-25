@@ -7,10 +7,17 @@
 class Ball
 {
 public:
+	enum WallCollResult
+	{
+		Default,
+		WallCollided,
+		GameOver
+	};
+public:
 	Ball(const Vec2& pos_in, const Vec2& dir_in);
 	void Draw(Graphics& gfx);
 	void Update(float dt);
-	int DoWallcollision(const RectF& walls);
+	WallCollResult DoWallcollision(const RectF& walls);
 	void ReboundX();
 	void ReboundY();
 	Vec2 GetVelocity() const;

@@ -34,7 +34,7 @@
 
 class Game
 {
-public:
+private:
 	enum GameStates
 	{
 		StartScreen,
