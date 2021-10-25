@@ -30,6 +30,7 @@
 #include "Paddle.h"
 #include "Sound.h"
 #include "SpriteCodex.h"
+#include "LifeCounter.h"
 
 class Game
 {
@@ -45,6 +46,7 @@ private:
 	/*  User Functions              */
 	/********************************/
 	void StartRound();
+	void ResetBall();
 private:
 	MainWindow& wnd;
 	Graphics gfx;
@@ -70,6 +72,7 @@ private:
 	Ball ball;
 	Brick bricks[nBricks];
 	Paddle pad;
+	LifeCounter lifeCounter;
 	Sound soundPad;
 	Sound soundBrick;
 	float curWaitTime;

@@ -29,6 +29,7 @@ Game::Game( MainWindow& wnd )
 		 wallThickness, wallColor),
 	ball(Graphics::GetScreenRect().GetCenter(), Vec2(-0.5f, -1.0f)),
 	pad(Vec2(400.0f, 550.0f), 32.0f, 6.0f),
+	lifeCounter({30.0f, 30.0f}, 3),
 	soundPad(L"Sounds\\arkpad.wav"),
 	soundBrick(L"Sounds\\arkbrick.wav")
 {
@@ -44,6 +45,7 @@ Game::Game( MainWindow& wnd )
 			i++;
 		}
 	}
+	ResetBall();
 }
 
 void Game::Go()
@@ -106,13 +108,16 @@ void Game::UpdateModel()
 		const int ballWallColResult = ball.DoWallcollision(wall.GetInnerBounds());
 		if (ballWallColResult == 1)
 		{
+			if (!pad.GetRect().IsOverlapping(ball.GetRect()))
+			{
+				pad.ResetCooldown();
+			}
 			soundPad.Play();
-			pad.ResetCooldown();
 		}
 		else if (ballWallColResult == 2)
 		{
-			gameState = 2;
-			isGameOver = true;
+			StartRound();
+			ResetBall();
 		}
 	}
 	else if (gameState == 0)
@@ -134,16 +139,33 @@ void Game::UpdateModel()
 
 void Game::StartRound()
 {
-	curWaitTime = 0.0f;
-	gameState = 3;
+	if (lifeCounter.ConsumeLife())
+	{
+		curWaitTime = 0.0f;
+		gameState = 3;
+	}
+	else
+	{
+		gameState = 2;
+	}
+}
+
+void Game::ResetBall()
+{
+	ball = Ball(Graphics::GetScreenRect().GetCenter(), Vec2(-0.5f, -1.0f));
 }
 
 void Game::ComposeFrame()
 {
 	if (gameState == 1 || gameState == 3)
 	{
-		ball.Draw(gfx);
+		lifeCounter.Draw(gfx);
 		pad.Draw(gfx);
+	}
+
+	if (gameState == 1)
+	{
+		ball.Draw(gfx);
 	}
 
 	if (gameState != 0)
