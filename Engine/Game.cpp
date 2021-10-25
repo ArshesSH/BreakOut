@@ -59,7 +59,7 @@ void Game::Go()
 void Game::UpdateModel()
 {
 	const float dt = ft.Mark();
-	if (gameState == 1)
+	if (gameState == Playing)
 	{
 
 
@@ -120,19 +120,19 @@ void Game::UpdateModel()
 			ResetBall();
 		}
 	}
-	else if (gameState == 0)
+	else if (gameState == StartScreen)
 	{
 		if (wnd.kbd.KeyIsPressed(VK_RETURN))
 		{
 			StartRound();
 		}
 	}
-	else if (gameState == 3)
+	else if (gameState == Ready)
 	{
 		// check to see if ready wait period is over
 		if ((curWaitTime += dt) > readyWaitTime)
 		{
-			gameState = 1;
+			gameState = Playing;
 		}
 	}
 }
@@ -142,11 +142,11 @@ void Game::StartRound()
 	if (lifeCounter.ConsumeLife())
 	{
 		curWaitTime = 0.0f;
-		gameState = 3;
+		gameState = Ready;
 	}
 	else
 	{
-		gameState = 2;
+		gameState = GameOver;
 	}
 }
 
@@ -157,18 +157,18 @@ void Game::ResetBall()
 
 void Game::ComposeFrame()
 {
-	if (gameState == 1 || gameState == 3)
+	if (gameState == Playing || gameState == Ready)
 	{
 		lifeCounter.Draw(gfx);
 		pad.Draw(gfx);
 	}
 
-	if (gameState == 1)
+	if (gameState == Playing)
 	{
 		ball.Draw(gfx);
 	}
 
-	if (gameState != 0)
+	if (gameState != StartScreen)
 	{
 		for (const Brick& b : bricks)
 		{
@@ -177,12 +177,12 @@ void Game::ComposeFrame()
 		wall.Draw(gfx);
 	}
 
-	if (gameState == 0)
+	if (gameState == StartScreen)
 	{
 		SpriteCodex::DrawTitle(Graphics::GetScreenRect().GetCenter(), gfx);
 	}
 
-	else if (gameState == 2)
+	else if (gameState == GameOver)
 	{
 		SpriteCodex::DrawGameOver(Graphics::GetScreenRect().GetCenter(), gfx);
 	}

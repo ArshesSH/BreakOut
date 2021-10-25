@@ -35,6 +35,15 @@
 class Game
 {
 public:
+	enum GameStates
+	{
+		StartScreen,
+		Playing,
+		GameOver,
+		Ready
+	};
+
+public:
 	Game( class MainWindow& wnd );
 	Game( const Game& ) = delete;
 	Game& operator=( const Game& ) = delete;
@@ -65,8 +74,9 @@ private:
 	static constexpr Color brickColors[4] = { {230,0,0},{0,230,0},{0,0,230},Colors::Cyan };
 	static constexpr Color wallColor = { 20,60,200 };
 	static constexpr float readyWaitTime = 4.3f;
+
 	// 0: not started  1:playing  2:game over 3:readywait
-	int gameState = 0;
+	GameStates gameState = StartScreen;
 	FrameTimer ft;
 	Walls wall;
 	Ball ball;
