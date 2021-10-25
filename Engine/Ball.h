@@ -7,7 +7,7 @@
 class Ball
 {
 public:
-	enum WallCollResult
+	enum class WallCollResult
 	{
 		Default,
 		WallCollided,

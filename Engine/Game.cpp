@@ -59,7 +59,7 @@ void Game::Go()
 void Game::UpdateModel()
 {
 	const float dt = ft.Mark();
-	if (gameState == Playing)
+	if (gameState == GameStates::Playing)
 	{
 
 
@@ -106,7 +106,7 @@ void Game::UpdateModel()
 		}
 
 		const Ball::WallCollResult ballWallColResult = ball.DoWallcollision(wall.GetInnerBounds());
-		if (ballWallColResult == Ball::WallCollided)
+		if (ballWallColResult == Ball::WallCollResult::WallCollided)
 		{
 			if (!pad.GetRect().IsOverlapping(ball.GetRect()))
 			{
@@ -114,25 +114,25 @@ void Game::UpdateModel()
 			}
 			soundPad.Play();
 		}
-		else if (ballWallColResult == Ball::GameOver)
+		else if (ballWallColResult == Ball::WallCollResult::GameOver)
 		{
 			StartRound();
 			ResetBall();
 		}
 	}
-	else if (gameState == StartScreen)
+	else if (gameState == GameStates::StartScreen)
 	{
 		if (wnd.kbd.KeyIsPressed(VK_RETURN))
 		{
 			StartRound();
 		}
 	}
-	else if (gameState == Ready)
+	else if (gameState == GameStates::Ready)
 	{
 		// check to see if ready wait period is over
 		if ((curWaitTime += dt) > readyWaitTime)
 		{
-			gameState = Playing;
+			gameState = GameStates::Playing;
 		}
 	}
 }
@@ -142,11 +142,11 @@ void Game::StartRound()
 	if (lifeCounter.ConsumeLife())
 	{
 		curWaitTime = 0.0f;
-		gameState = Ready;
+		gameState = GameStates::Ready;
 	}
 	else
 	{
-		gameState = GameOver;
+		gameState = GameStates::GameOver;
 	}
 }
 
@@ -157,18 +157,18 @@ void Game::ResetBall()
 
 void Game::ComposeFrame()
 {
-	if (gameState == Playing || gameState == Ready)
+	if (gameState == GameStates::Playing || gameState == GameStates::Ready)
 	{
 		lifeCounter.Draw(gfx);
 		pad.Draw(gfx);
 	}
 
-	if (gameState == Playing)
+	if (gameState == GameStates::Playing)
 	{
 		ball.Draw(gfx);
 	}
 
-	if (gameState != StartScreen)
+	if (gameState != GameStates::StartScreen)
 	{
 		for (const Brick& b : bricks)
 		{
@@ -177,12 +177,12 @@ void Game::ComposeFrame()
 		wall.Draw(gfx);
 	}
 
-	if (gameState == StartScreen)
+	if (gameState == GameStates::StartScreen)
 	{
 		SpriteCodex::DrawTitle(Graphics::GetScreenRect().GetCenter(), gfx);
 	}
 
-	else if (gameState == GameOver)
+	else if (gameState == GameStates::GameOver)
 	{
 		SpriteCodex::DrawGameOver(Graphics::GetScreenRect().GetCenter(), gfx);
 	}

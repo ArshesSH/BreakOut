@@ -35,7 +35,7 @@
 class Game
 {
 private:
-	enum GameStates
+	enum class GameStates
 	{
 		StartScreen,
 		Playing,
@@ -76,7 +76,7 @@ private:
 	static constexpr float readyWaitTime = 4.3f;
 
 	// 0: not started  1:playing  2:game over 3:readywait
-	GameStates gameState = StartScreen;
+	GameStates gameState = GameStates::StartScreen;
 	FrameTimer ft;
 	Walls wall;
 	Ball ball;
